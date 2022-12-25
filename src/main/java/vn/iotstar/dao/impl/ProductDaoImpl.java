@@ -10,6 +10,10 @@ import java.util.List;
 import vn.iotstar.connection.DBConnection;
 import vn.iotstar.dao.ProductDao;
 import vn.iotstar.model.product;
+import vn.iotstar.service.categoryService;
+import vn.iotstar.service.storeService;
+import vn.iotstar.service.impl.categoryServiceImpl;
+import vn.iotstar.service.impl.storeServiceImpl;
 
 public class ProductDaoImpl extends DBConnection implements ProductDao {
 
@@ -172,7 +176,9 @@ public class ProductDaoImpl extends DBConnection implements ProductDao {
 	@Override
 	public product findById(int id) {
 		// TODO Auto-generated method stub
-		String sql = "select * from product " + "where id =?";
+		String sql = "select * from product " + "where id =?";	
+		categoryService categoryservice = new categoryServiceImpl();
+		storeService storeservice = new storeServiceImpl();
 		try {
 			Connection conn = new DBConnection().getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -190,6 +196,8 @@ public class ProductDaoImpl extends DBConnection implements ProductDao {
 				product.setCategoryId(rs.getInt("categoryId"));
 				product.setStoreId(rs.getInt("storeId"));
 				product.setRating(rs.getInt("rating"));
+				product.setStore(storeservice.get(product.getStoreId()));
+				product.setCategory(categoryservice.get(rs.getInt("categoryId")));
 				return product;
 			}
 		} catch (Exception e) {

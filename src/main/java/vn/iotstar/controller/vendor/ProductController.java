@@ -35,7 +35,7 @@ public class ProductController extends HttpServlet {
 		if(url.contains("product")) {
 			List<product> productList = productservice.getAllProductByAdmin();
 			req.setAttribute("productList", productList);
-            req.getRequestDispatcher("/views/admin/product/product.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/vendor/product/product.jsp").forward(req, resp);
 		}
 	}
 

@@ -1,5 +1,7 @@
 package vn.iotstar.model;
 
+import java.util.List;
+
 public class Orders extends AbstractModel<Orders>{
 	private int userId;
     private int storeId;
@@ -13,6 +15,7 @@ public class Orders extends AbstractModel<Orders>{
     private user User;
     private Store store;
     private Delivery delivery;
+    private List<OrdersItem> ordersItem;
 
     public Delivery getDelivery() {
         return delivery;
@@ -109,4 +112,12 @@ public class Orders extends AbstractModel<Orders>{
     public void setAmountToGD(Double amountToGD) {
         this.amountToGD = amountToGD;
     }
+
+	public List<OrdersItem> getOrdersItem() {
+		return ordersItem;
+	}
+
+	public void setOrdersItem(List<OrdersItem> ordersItem) {
+		this.ordersItem = ordersItem;
+	}
 }

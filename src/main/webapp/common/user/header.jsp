@@ -17,7 +17,6 @@
 			<div class="d-inline-flex align-items-center">
 				<div class="btn-group">
 				<c:if test="${empty sessionScope.User}">
-					
 					<button type="button" class="btn btn-sm btn-light dropdown-toggle"
 						data-toggle="dropdown">Account</button>
 					<div class="dropdown-menu dropdown-menu-right">
@@ -42,7 +41,18 @@
 					<a href="<c:url value ="/home/signin/profileuser"/>"
 						class="btn btn-sm btn-light">Profile</a>
 				</div>
-
+				<c:if test="${empty sessionScope.User}">
+				<div class="btn-group mx-2">
+					<a href="<c:url value ="/vendor"/>"
+						class="btn btn-sm btn-light">Vendor</a>
+				</div>
+				</c:if>
+				<c:if test="${ not empty sessionScope.User}">
+				<div class="btn-group mx-2">
+					<a href="<c:url value ="/vendor"/>"
+						class="btn btn-sm btn-light">My store</a>
+				</div>
+				</c:if>
 				</div>
 			</div>
 			<div class="d-inline-flex align-items-center d-block d-lg-none">
@@ -158,6 +168,11 @@
 							style="padding-bottom: 2px;"></span>
 						</a>
 						<a href="<c:url value ="/home/cart"/>" class="btn px-0 ml-3"> <i
+							class="fas fa-shopping-cart text-primary"></i> <span
+							class="badge text-secondary border border-secondary rounded-circle"
+							style="padding-bottom: 2px;"></span>
+						</a>
+						<a href="<c:url value ="/home/orders"/>" class="btn px-0 ml-3"> <i
 							class="fas fa-shopping-cart text-primary"></i> <span
 							class="badge text-secondary border border-secondary rounded-circle"
 							style="padding-bottom: 2px;"></span>

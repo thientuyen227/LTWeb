@@ -1,6 +1,5 @@
 package vn.iotstar.controller.user;
 
-
 import java.io.IOException;
 import java.util.List;
 
@@ -39,6 +38,4 @@ public class HomeController extends HttpServlet {
 		
 	}
 	
-
-
 }

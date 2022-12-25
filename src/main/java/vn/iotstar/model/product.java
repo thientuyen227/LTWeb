@@ -12,6 +12,7 @@ public class product extends AbstractModel<product> {
 	private int storeId;
 	private int rating;
 	private Store store;
+	private category category; 
 	public String getname() {
 		return name;
 	}
@@ -77,5 +78,11 @@ public class product extends AbstractModel<product> {
 	}
 	public void setStore(Store store) {
 		this.store = store;
+	}
+	public category getCategory() {
+		return category;
+	}
+	public void setCategory(category category) {
+		this.category = category;
 	}
 }

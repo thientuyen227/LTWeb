@@ -73,7 +73,7 @@
   ======================================================== -->
 </head>
 <body>
-	<%@ include file="/common/vendor/header.jsp"%>
+	<%@ include file="/common/user/header.jsp"%>
 	<dec:body />
 	<!-- JavaScript Bundle with Popper -->
 	<script

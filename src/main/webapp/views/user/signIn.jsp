@@ -24,7 +24,7 @@
 		</div>
 		<p></p>
 		<div class="input-group">
-			<input name="password" type="text" class="form-control" placeholder="Your Password">
+			<input name="password" type="password" class="form-control" placeholder="Your Password">
 			<div class="input-group-append">
 				<button class="btn btn-primary">Sign In</button>
 			</div>

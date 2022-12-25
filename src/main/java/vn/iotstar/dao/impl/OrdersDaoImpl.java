@@ -8,19 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vn.iotstar.connection.DBConnection;
-import vn.iotstar.dao.OrderDao;
+import vn.iotstar.dao.OrdersDao;
 import vn.iotstar.model.Delivery;
 import vn.iotstar.model.Orders;
+import vn.iotstar.model.OrdersItem;
 import vn.iotstar.model.Store;
 import vn.iotstar.model.user;
+import vn.iotstar.paging.pgEble;
 import vn.iotstar.service.deliveryService;
+import vn.iotstar.service.ordersItemService;
 import vn.iotstar.service.storeService;
 import vn.iotstar.service.userService;
+import vn.iotstar.service.impl.OrdersItemServiceImpl;
 import vn.iotstar.service.impl.deliveryServicelmpl;
 import vn.iotstar.service.impl.storeServiceImpl;
 import vn.iotstar.service.impl.userServiceImpl;
 
-public class OrderDaoImpl extends DBConnection implements OrderDao {
+public class OrdersDaoImpl extends DBConnection implements OrdersDao {
     public Connection conn = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
@@ -41,8 +45,8 @@ public class OrderDaoImpl extends DBConnection implements OrderDao {
             rs = ps.executeQuery();
             while (rs.next()){
                 Orders order = new Orders();
-                user user = userService.fin(rs.getInt("userId"));
-                Store store = storeService.findById(rs.getInt("storeId"));
+                user user = userService.get(rs.getInt("userId"));
+                Store store = storeService.get(rs.getInt("storeId"));
                 Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
                 order.setId(rs.getInt("id"));
                 order.setUserId(rs.getInt("userId"));
@@ -79,8 +83,8 @@ public class OrderDaoImpl extends DBConnection implements OrderDao {
             rs = ps.executeQuery();
             Orders order = new Orders();
             while (rs.next()){
-                user user = userService.findById(rs.getInt("userId"));
-                Store store = storeService.findById(rs.getInt("storeId"));
+                user user = userService.get(rs.getInt("userId"));
+                Store store = storeService.get(rs.getInt("storeId"));
                 Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
                 order.setId(rs.getInt("id"));
                 order.setAddress(rs.getString("address"));
@@ -190,6 +194,94 @@ public class OrderDaoImpl extends DBConnection implements OrderDao {
                 order.setAmountFromUser(rs.getDouble("amountFromUser"));
                 order.setAmountToStore(rs.getDouble("amountToStore"));
                 order.setAmountToGD(rs.getDouble("amountToGD"));
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+	}
+	@Override
+	public List<Orders> findAllByUserId(int userId) {
+		// TODO Auto-generated method stub
+		String sql = "select * from orders where userId = ?";
+        List<Orders> orders = new ArrayList<>();
+        userService userService = new userServiceImpl();
+        storeService storeService = new storeServiceImpl();
+        deliveryService deliveryService = new deliveryServicelmpl();
+        ordersItemService ordersItemService = new OrdersItemServiceImpl();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Orders order = new Orders();
+                user user = userService.get(rs.getInt("userId"));
+                Store store = storeService.get(rs.getInt("storeId"));
+                Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
+                List<OrdersItem> ordersItem = ordersItemService.findByOrdersId(rs.getInt("id"));
+                order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
+                order.setAddress(rs.getString("address"));
+                order.setPhone(rs.getString("phone"));
+                order.setStatus(rs.getString("status"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
+                order.setAmountToStore(rs.getDouble("amountToStore"));
+                order.setAmountToGD(rs.getDouble("amountToGD"));
+                order.setUser(user);
+                order.setStore(store);
+                order.setDelivery(delivery);
+                order.setOrdersItem(ordersItem);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+	}
+	@Override
+	public List<Orders> findAllByStoreId(String status, int storeId, pgEble pgeble) {
+		// TODO Auto-generated method stub
+		StringBuilder sql = new StringBuilder("select * from orders");
+        if (!status.equals("all")) {
+            sql.append(" where status like \"");
+            sql.append(""+ status + "\"" + " and storeId = "+ storeId);
+        }
+        if (pgeble.getSort() != null) {
+            sql.append(" order by "+pgeble.getSort().getSortName()+" "+pgeble.getSort().getSortBy()+"");
+        }
+        if (pgeble.getOffset() != null && pgeble.getLimit() != null) {
+            sql.append(" limit "+pgeble.getOffset()+", "+pgeble.getLimit()+"");
+        }
+        List<Orders> orders = new ArrayList<>();
+        userService userservice = new userServiceImpl();
+        storeService storeservice = new storeServiceImpl();
+        deliveryService deliveryService = new deliveryServicelmpl();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Orders order = new Orders();
+                user user = userservice.get(rs.getInt("userId"));
+                Store store = storeservice.get(rs.getInt("storeId"));
+                Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
+                order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
+                order.setAddress(rs.getString("address"));
+                order.setPhone(rs.getString("phone"));
+                order.setStatus(rs.getString("status"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
+                order.setAmountToStore(rs.getDouble("amountToStore"));
+                order.setAmountToGD(rs.getDouble("amountToGD"));
+                order.setUser(user);
+                order.setStore(store);
+                order.setDelivery(delivery);
                 orders.add(order);
             }
         } catch (SQLException e) {

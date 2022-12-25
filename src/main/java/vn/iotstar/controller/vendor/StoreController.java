@@ -40,6 +40,7 @@ public class StoreController extends HttpServlet {
 			req.setAttribute("store", store);
 			req.getRequestDispatcher("/views/vendor/store/storeDetail.jsp").forward(req, resp);
 		} else if (url.contains("store")) {
+			
 			user user = (user) req.getSession().getAttribute("User");
 			List<Store> storeList = storeservice.findByUserId(user.getId());
 			req.setAttribute("storeList", storeList);

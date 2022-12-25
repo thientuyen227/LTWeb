@@ -95,6 +95,12 @@ public class productServiceImpl extends DBConnection implements productService{
 		return productDao.getAllProductByAdmin();
 	}
 
+	@Override
+	public List<product> getProductOfStore(int storeId) {
+		// TODO Auto-generated method stub
+		return productDao.getProductOfStore(storeId);
+	}
+
 
 
 

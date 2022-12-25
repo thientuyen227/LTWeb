@@ -17,7 +17,7 @@ public class VendorController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url= req.getRequestURL().toString();
-		if(url.contains("/vendor")) {
+		if(url.contains("vendor")) {
 			req.getRequestDispatcher("/views/vendor/homeVendor.jsp").forward(req, resp);
 		}
 		

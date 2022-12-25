@@ -12,6 +12,7 @@ public class user extends AbstractModel<user> {
 	private String role;
 	private String avatar;
 	private double eWallet;
+	private Store store;
 	public String getFirstname() {
 		return firstname;
 	}
@@ -77,6 +78,12 @@ public class user extends AbstractModel<user> {
 	}
 	public void seteWallet(double eWallet) {
 		this.eWallet = eWallet;
+	}
+	public Store getStore() {
+		return store;
+	}
+	public void setStore(Store store) {
+		this.store = store;
 	}
 	
 }

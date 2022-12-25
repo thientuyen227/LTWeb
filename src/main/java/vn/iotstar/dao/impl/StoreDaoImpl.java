@@ -147,7 +147,7 @@ public class StoreDaoImpl extends DBConnection implements StoreDao {
 	public List<Store> getAll() {
 		// TODO Auto-generated method stub
 		List<Store> listStore = new ArrayList<Store>();
-		String sql = "SELECT * from store";
+		String sql = "SELECT * from store where isOpen = 1";
 		try {
 			Connection conn = new DBConnection().getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -168,6 +168,77 @@ public class StoreDaoImpl extends DBConnection implements StoreDao {
 			e.printStackTrace();
 		}
 		return listStore;
+	}
+
+	@Override
+	public List<Store> getAllByAdmin() {
+		List<Store> listStore = new ArrayList<Store>();
+		String sql = "SELECT * from store";
+		try {
+			Connection conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Store store = new Store();
+				store.setId(rs.getInt("id"));
+				store.setAvatar(rs.getString("avatar"));
+				store.setName(rs.getString("name"));
+				store.setRating(rs.getInt("rating"));
+				store.setOwnerID(rs.getInt("ownerId"));
+				store.setCreateAt(rs.getTimestamp("createdAt"));
+				store.setOpen(rs.getBoolean("isOpen"));
+				listStore.add(store);
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+		return listStore;
+	}
+
+	@Override
+	public void isOpen(int isOpen, int id) {
+		// TODO Auto-generated method stub
+			// TODO Auto-generated method stub
+			String sql = "UPDATE store SET isOpen=? WHERE id = ?";
+			try {
+				Connection conn = super.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, isOpen);
+				ps.setInt(2, id);
+				ps.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
+
+	@Override
+	public Store getByUserId(int userId) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * from store where ownerId=?";
+		try {
+			Connection conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Store store = new Store();
+				store.setId(rs.getInt("id"));
+				store.setAvatar(rs.getString("avatar"));
+				store.setName(rs.getString("name"));
+				store.setRating(rs.getInt("rating"));
+				store.setOwnerID(rs.getInt("ownerId"));
+				store.setCreateAt(rs.getTimestamp("createdAt"));
+				return store;
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 }

@@ -9,6 +9,8 @@ import java.util.List;
 import vn.iotstar.connection.DBConnection;
 import vn.iotstar.dao.UserDao;
 import vn.iotstar.model.user;
+import vn.iotstar.service.storeService;
+import vn.iotstar.service.impl.storeServiceImpl;
 
 public class UserDaoImpl extends DBConnection implements UserDao {
 	@Override
@@ -70,6 +72,7 @@ public class UserDaoImpl extends DBConnection implements UserDao {
 	public user get(int userId) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM user WHERE id = ? ";
+		storeService storeservice= new storeServiceImpl();
 		try {
 			Connection conn = super.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -85,6 +88,7 @@ public class UserDaoImpl extends DBConnection implements UserDao {
 				user.setPhone(rs.getString("phone"));
 				user.setRole(rs.getString("role"));
 				user.setAvatar(rs.getString("avatar"));
+				user.setStore(storeservice.getByUserId(userId));
 				return user;
 			}
 		} catch (Exception e) {

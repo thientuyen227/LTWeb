@@ -61,4 +61,22 @@ public class storeServiceImpl extends DBConnection implements storeService {
 		return storeDao.getAll();
 	}
 
+	@Override
+	public List<Store> getAllByAdmin() {
+		// TODO Auto-generated method stub
+		return storeDao.getAllByAdmin();
+	}
+
+	@Override
+	public void isOpen(int isOpen, int id) {
+		// TODO Auto-generated method stub
+		storeDao.isOpen(isOpen, id);
+	}
+
+	@Override
+	public Store getByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return storeDao.getByUserId(userId);
+	}
+
 }

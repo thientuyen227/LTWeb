@@ -17,8 +17,6 @@
 <form action="" method="post">
     <!-- Cart Start -->
     <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-lg-8 table-responsive mb-5">
                 <table class="table table-light table-borderless table-hover text-center mb-0">
                     <thead class="thead-dark">
                         <tr>
@@ -27,6 +25,9 @@
                             <th>Rating</th>
                             <th>Owner Id</th>
                             <th>Created at</th>
+                            <th>Open</th>
+                            <th>Isopen</th>
+                            <th>Unisopen</th>
                             <th>Detail</th>
                         </tr>
                     </thead>
@@ -38,6 +39,11 @@
 	                            <td class="align-middle">${store.rating}</td>
 	                            <td class="align-middle">${store.ownerID}</td>
 	                            <td class="align-middle">${store.createAt}</td>
+	                            <td class="align-middle">${store.open}</td>
+	                            <td class="align-middle"><a class="btn btn-sm" href="<c:url value ="/admin/store/isopen?id=${store.id}"/>"><i
+											class="fa fa-check"></i></a></td>
+								<td class="align-middle"><a class="btn btn-sm" href="<c:url value ="/admin/store/unisopen?id=${store.id}"/>">
+								<i class="fa fa-ban"></i></a></td>
 	                            <td class="align-middle"><a class="btn btn-sm" href="<c:url value ="/admin/storedetail?id=${store.id}"/>"><i
 											class="fa fa-search"></i></a></td>
 	                        </tr>
@@ -45,8 +51,6 @@
                         </tbody>
                 </table>
             </div>
-        </div>
-    </div>
  </form>
     <!-- Cart End -->
     

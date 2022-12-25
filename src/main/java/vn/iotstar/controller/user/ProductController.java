@@ -46,7 +46,6 @@ public class ProductController extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 			String searchKeyWord = req.getParameter("searchKeyWord");
-			System.out.print(searchKeyWord);
 			if (searchKeyWord != null) {
 				List<product> searchProductByName = productservice.searchProductByName(searchKeyWord);
 				req.setAttribute("productList", searchProductByName);
